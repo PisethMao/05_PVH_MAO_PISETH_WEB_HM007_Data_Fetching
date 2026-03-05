@@ -2,7 +2,7 @@ name: Deploy to GCP
 on:
   push:
     branches:
-      - master
+      - master4
 jobs:
   deploy:
     runs-on: ubuntu-latest

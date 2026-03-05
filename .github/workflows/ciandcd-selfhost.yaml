@@ -2,7 +2,7 @@ name: Self Hosted CI/CD
 on:
   push:
     branches:
-      - master
+      - master2
 jobs:
   deploy:
     runs-on: self-hosted
