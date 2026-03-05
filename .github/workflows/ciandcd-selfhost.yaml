@@ -1,0 +1,18 @@
+name: Self Hosted CI/CD
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build Docker Image
+        run: docker build -t nextjs-app .
+      - name: Run container
+        run: |
+          docker stop nextjs-app || true
+          docker rm nextjs-app || true
+          docker run -d -p 3000:3000 --name nextjs-app nextjs-app
