@@ -6,7 +6,7 @@ on:
 env:
   DOCKER_IMAGE: pisethmao/nextjs-data-fetching
   IMAGE_TAG: 1.0.0
-  HELM_REPO: PisethMao/ci-cd-k8s-argocd-homewok
+  HELM_REPO: PisethMao/helm-with-argocd
   RELEASE_NAME: nextjs-app
   NAMESPACE: default
 jobs:
