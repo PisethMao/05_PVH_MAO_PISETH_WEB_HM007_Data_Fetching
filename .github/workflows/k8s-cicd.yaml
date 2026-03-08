@@ -58,6 +58,7 @@ jobs:
       - name: Push Changes
         run: |
           cd helm_repo
+          echo "Update Git Token"
           git push https://${{ secrets.GIT_TOKEN }}@github.com/${{ env.HELM_REPO }}
       - name: Clean up
         run: |
