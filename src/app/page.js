@@ -22,7 +22,7 @@ export default function Home() {
         }}
       ></div>
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">
-        All Movie &nbsp;&nbsp;&#62;
+        All Movie test update &nbsp;&nbsp;&#62;
       </h1>
       <CardComponent />
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">
