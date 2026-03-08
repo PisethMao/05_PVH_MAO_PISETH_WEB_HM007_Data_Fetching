@@ -43,8 +43,6 @@ jobs:
       - name: Update Helm Chart
         run: |
           cd helm_repo/nextjs-data-fetching
-          echo "Update repository username/imagename"
-          yq -i ".image.repository=\"${{ secrets.USERNAME }}/${{ env.DOCKER_IMAGE }}\"" values.yaml
           echo "Updating image tag"
           yq -i ".image.tag=\"${{ env.IMAGE_TAG }}\"" values.yaml
           cat values.yaml
