@@ -6,11 +6,11 @@ on:
 env:
   DOCKER_IMAGE: pisethmao/nextjs-data-fetching
   IMAGE_TAG: 1.0.0
-  HELM_REPO: nextjs-data-fetching
+  HELM_REPO: PisethMao/ci-cd-k8s-argocd-homewok
   RELEASE_NAME: nextjs-app
   NAMESPACE: default
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     environment: DOCKER_ENV
     steps:
@@ -27,3 +27,40 @@ jobs:
         run: docker push $DOCKER_IMAGE:$IMAGE_TAG
       - name: Logout DockerHub
         run: docker logout
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: DOCKER_ENV
+    steps:
+      - name: Install yq command
+        run: |
+          sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
+          sudo chmod +x /usr/local/bin/yq
+          yq --version
+      - name: Clone ArgoCD Repository
+        run: |
+          git clone https://github.com/${{ env.HELM_REPO }} helm_repo
+      - name: Update Helm Chart
+        run: |
+          cd helm_repo/nextjs-data-fetching
+          echo "Update repository username/imagename"
+          yq -i ".image.repository=\"${{ secrets.USERNAME }}/${{ env.DOCKER_IMAGE }}\"" values.yaml
+          echo "Updating image tag"
+          yq -i ".image.tag=\"${{ env.IMAGE_TAG }}\"" values.yaml
+          cat values.yaml
+      - name: Commit Changes
+        run: |
+          cd helm_repo
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git add .
+          git commit -m "Update helm image to ${{ env.IMAGE_TAG }}" || echo "No changes"
+      - name: Push Changes
+        run: |
+          cd helm_repo
+          git push https://${{ secrets.GIT_TOKEN }}@github.com/${{ env.HELM_REPO }}
+      - name: Clean up
+        run: |
+          echo "Cleaning temporary files..."
+          rm -rf helm_repo
+          docker system prune -af || true
