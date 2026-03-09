@@ -5,7 +5,7 @@ on:
       - master
 env:
   DOCKER_IMAGE: pisethmao/nextjs-data-fetching
-  IMAGE_TAG: ${{ github.sha }}
+  IMAGE_TAG: 1.0.0
   HELM_REPO: PisethMao/helm-with-argocd
   RELEASE_NAME: nextjs-app
   NAMESPACE: default
@@ -21,16 +21,10 @@ jobs:
         with:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ env.DOCKER_IMAGE }}:${{ env.IMAGE_TAG }}
-          cache-from: type=registry,ref=${{ env.DOCKER_IMAGE }}:buildcache
-          cache-to: type=registry,ref=${{ env.DOCKER_IMAGE }}:buildcache,mode=max
-          build-args: |
-            CACHE_BUST=${{ github.sha }}
+      - name: Build Docker image
+        run: docker build -t $DOCKER_IMAGE:$IMAGE_TAG .
+      - name: Push Docker image
+        run: docker push $DOCKER_IMAGE:$IMAGE_TAG
       - name: Logout DockerHub
         run: docker logout
   deploy:
