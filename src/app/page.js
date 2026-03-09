@@ -34,7 +34,7 @@ export default function Home() {
       </h1>
       <CardDramaComponent />
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">
-        Science Fiction Movie &nbsp;&nbsp;&#62;
+        Science Fiction Movie demo &nbsp;&nbsp;&#62;
       </h1>
       <CardScienceFictionComponent />
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">
