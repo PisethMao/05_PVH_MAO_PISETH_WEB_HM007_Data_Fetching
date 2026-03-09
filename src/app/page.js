@@ -26,7 +26,7 @@ export default function Home() {
       </h1>
       <CardComponent />
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">
-        Action update Movie &nbsp;&nbsp;&#62;
+        Action Movie demo &nbsp;&nbsp;&#62;
       </h1>
       <CardActionComponent />
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">

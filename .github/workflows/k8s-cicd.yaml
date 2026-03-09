@@ -29,6 +29,8 @@ jobs:
           tags: ${{ env.DOCKER_IMAGE }}:${{ env.IMAGE_TAG }}
           cache-from: type=registry,ref=${{ env.DOCKER_IMAGE }}:buildcache
           cache-to: type=registry,ref=${{ env.DOCKER_IMAGE }}:buildcache,mode=max
+          build-args: |
+            CACHE_BUST=${{ github.sha }}
       - name: Logout DockerHub
         run: docker logout
   deploy:
