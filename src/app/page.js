@@ -30,7 +30,7 @@ export default function Home() {
       </h1>
       <CardActionComponent />
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">
-        Drama Movie &nbsp;&nbsp;&#62;
+        Drama update latest Movie &nbsp;&nbsp;&#62;
       </h1>
       <CardDramaComponent />
       <h1 className="ml-10 text-white text-2xl mb-5 font-bold mt-5">
